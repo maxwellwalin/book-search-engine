@@ -1,25 +1,26 @@
-const { User } = require('../models');
+const { User, Book } = require('../models');
+const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    getSingleUser: async (parent, { user = null, params }) => {
-
-      return User.findOne({
-        $or: [{ _id: user ? user._id : params.id }, { username: params.username }],
-      });
-    }
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate('savedBooks');
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   },
   Mutation: {
-    login: async (parent, { body }) => {
+    loginUser: async (parent, { email, password }) => {
 
-      const user = await User.findOne({ $or: [{ username: body.username }, { email: body.email }] });
+      const user = await User.findOne({ email: email });
 
       if (!user) {
         throw new AuthenticationError('No user found with this email address');
       }
 
-      const correctPw = await user.isCorrectPassword(body.password);
+      const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
@@ -29,30 +30,36 @@ const resolvers = {
 
       return { token, user };
     },
-    createUser: async (parent, { body }) => {
+    addUser: async (parent, { username, email, password }) => {
 
-      const user = await User.create({ body });
+      const user = await User.create({ username: username, email: email, password: password });
 
       const token = signToken(user);
 
       return { token, user };
     },
-    saveBook: async (parent, { user, body}) => {
+    saveBook: async (parent, { authors, description, title, bookId, image, link }, context) => {
 
       const updatedUser = await User.findOneAndUpdate(
-        { _id: user._id },
-        { $addToSet: { savedBooks: body } },
+        { _id: context.user._id },
+        {
+          $addToSet: {
+            savedBooks: {
+              authors: authors, description: description, title: title, bookId: bookId, image: image, link: link
+            }
+          }
+        },
         { new: true, runValidators: true }
       );
 
       return updatedUser;
     },
-    deleteBook: async (parent, { user, params }) => {
+    removeBook: async (parent, { bookId }, context) => {
       const updatedUser = await User.findOneAndUpdate(
-      { _id: user._id },
-      { $pull: { savedBooks: { bookId: params.bookId } } },
-      { new: true }
-    );
+        { _id: context.user._id },
+        { $pull: { savedBooks: { bookId: bookId } } },
+        { new: true }
+      );
       return updatedUser;
     },
   },
