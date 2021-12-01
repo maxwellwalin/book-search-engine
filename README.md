@@ -1,21 +1,16 @@
-# 21 MERN: Book Search Engine
+# Book Search Engine
 
-## Your Task
+Most modern websites are driven by two things: data and user demands. This shouldn't come as a surprise, as the ability to personalize user data is the cornerstone of real-world web development today. And as user demands evolve, applications need to be more performant.
 
-Your assignment this week is emblematic of the fact that most modern websites are driven by two things: data and user demands. This shouldn't come as a surprise, as the ability to personalize user data is the cornerstone of real-world web development today. And as user demands evolve, applications need to be more performant.
+This application was created by taking starter code with a fully functioning Google Books API search engine built with a RESTful API, and refactoring it to be a GraphQL API built with Apollo Server. The final app was built using the MERN stack with a React front end, MongoDB database, and Node.js/Apollo server and GraphQL API. 
 
-This week, you’ll take starter code with a fully functioning Google Books API search engine built with a RESTful API, and refactor it to be a GraphQL API built with Apollo Server. The app was built using the MERN stack with a React front end, MongoDB database, and Node.js/Express.js server and API. It's already set up to allow users to save book searches to the back end. 
-
-To complete the assignment, you’ll need to do the following:
+To refactor the code, the following was performed:
 
 1. Set up an Apollo Server to use GraphQL queries and mutations to fetch and modify data, replacing the existing RESTful API.
 
 2. Modify the existing authentication middleware so that it works in the context of a GraphQL API.
 
 3. Create an Apollo Provider so that requests can communicate with an Apollo Server.
-
-4. Deploy your application to Heroku with a MongoDB database using MongoDB Atlas. Use the [Deploy with Heroku and MongoDB Atlas](https://coding-boot-camp.github.io/full-stack/mongodb/deploy-with-heroku-and-mongodb-atlas) walkthrough for instructions.
-
 
 ## User Story
 
@@ -63,7 +58,7 @@ THEN I am logged out of the site and presented with a menu with the options Sear
 
 ## Mock-Up
 
-Let's start by revisiting the web application's appearance and functionality.
+The web application's appearance and functionality:
 
 As you can see in the following animation, a user can type a search term (in this case, "star wars") in a search box and the results appear:
 
@@ -78,15 +73,13 @@ A user can view their saved books on a separate page, as shown in the following 
 ![The Viewing Lernantino's Books page shows the books that the user Lernaninto has saved.](./Assets/21-mern-homework-demo-03.gif)
 
 
-## Getting Started
+## Detailed Refactoring Steps
 
-In order for this application to use a GraphQL API, you’ll need to refactor the API to use GraphQL on the back end and add some functionality to the front end. The following sections contain details about the files you’ll need to modify on the back end and the front end.
-
-**Important**: Make sure to study the application before building upon it. Better yet, start by making a copy of it. It's already a working application&mdash;you're converting it from RESTful API practices to a GraphQL API.
+In order for this application to use a GraphQL API,I needed to refactor the API to use GraphQL on the back end and add some functionality to the front end. The following sections contain details about the files I modified on the back end and the front end.
 
 ### Back-End Specifications
 
-You’ll need to complete the following tasks in each of these back-end files:
+I completed the following tasks in each of these back-end files:
 
 * `auth.js`: Update the auth middleware function to work with the GraphQL API.
 
@@ -153,7 +146,7 @@ You’ll need to complete the following tasks in each of these back-end files:
 
 ### Front-End Specifications
 
-You'll need to create the following front-end files:
+I created the following front-end files:
 
 * `queries.js`: This will hold the query `GET_ME`, which will execute the `me` query set up using Apollo Server.
 
@@ -167,7 +160,7 @@ You'll need to create the following front-end files:
 
 	* `REMOVE_BOOK` will execute the `removeBook` mutation.
 
-Additionally, you’ll need to complete the following tasks in each of these front-end files:
+Additionally, I completed the following tasks in each of these front-end files:
 
 * `App.js`: Create an Apollo Provider to make every request work with the Apollo Server.
 	
@@ -188,69 +181,6 @@ Additionally, you’ll need to complete the following tasks in each of these fro
 * `SignupForm.js`: Replace the `addUser()` functionality imported from the `API` file with the `ADD_USER` mutation functionality.
 
 * `LoginForm.js`: Replace the `loginUser()` functionality imported from the `API` file with the `LOGIN_USER` mutation functionality.
-
-
-## Grading Requirements
-
-This homework is graded based on the following criteria:
-
-### Technical Acceptance Criteria: 40%
-
-* Satisfies all of the preceding acceptance criteria plus the following:
-
-	* Has an Apollo Server that uses GraphQL queries and mutations to fetch and modify data, replacing the existing RESTful API.
-
-	* Use an Apollo Server and apply it to the Express.js server as middleware.
-
-	* Include schema settings for resolvers and typeDefs as outlined in the homework instructions.
-
-	* Modify the existing authentication middleware to work in the context of a GraphQL API.
-
-	* Use an Apollo Provider so that the application can communicate with the Apollo Server.
-
-	* Application must be deployed to Heroku.
-
-
-### Deployment: 32%
-
-* Application deployed at live URL.
-
-* Application loads with no errors.
-
-* Application GitHub URL submitted.
-
-* GitHub repository contains application code.
-
-
-### Application Quality: 15%
-
-* User experience is intuitive and easy to navigate.
-
-* User interface style is clean and polished.
-
-* Application resembles the mock-up functionality provided in the homework instructions.
-
-
-### Repository Quality: 13%
-
-* Repository has a unique name.
-
-* Repository follows best practices for file structure and naming conventions.
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages.
-
-* Repository contains high-quality README file with description, screenshot, and link to the deployed application.
-
-
-## Review
-
-You are required to submit BOTH of the following for review:
-
-* The URL of the functional, deployed application.
-
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
 
 ---
 © 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
